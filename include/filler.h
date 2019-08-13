@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/12 16:22:01 by smorty            #+#    #+#             */
-/*   Updated: 2019/08/12 21:49:57 by smorty           ###   ########.fr       */
+/*   Updated: 2019/08/13 22:56:48 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,14 @@
 #define	O_PLAYER -21
 #define	X_PLAYER -12
 
+typedef struct	s_play
+{
+	int val;
+	int x;
+	int y;
+}				t_play;
+
+
 typedef struct	s_piece
 {
 	char	**fig;
@@ -37,6 +45,7 @@ typedef struct	s_filler
 	int		y;
 	int		player;
 	int		opponent;
+	t_play	*move;
 }				t_filler;
 
 void		error(void);
