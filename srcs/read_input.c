@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 23:05:05 by smorty            #+#    #+#             */
-/*   Updated: 2019/08/12 19:10:39 by smorty           ###   ########.fr       */
+/*   Updated: 2019/08/14 21:43:15 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ static char	*output_line(char *tail, char *p)
 
 static char	*gnl(char **tail)
 {
-	char		buf[BUFF_SIZE + 1];
-	char		*p;
-	int			r;
+	char	buf[BUFF_SIZE + 1];
+	char	*p;
+	int		r;
 
 	if ((r = read(0, buf, BUFF_SIZE)) < 0)
 		error();
@@ -51,7 +51,7 @@ static char	*gnl(char **tail)
 	p = *tail;
 	while (*p && *p != '\n')
 		++p;
-	if (*p)
+	if (*p || (!r && p != *tail))
 		return (output_line(*tail, p));
 	if (r)
 		return (gnl(tail));

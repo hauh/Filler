@@ -6,13 +6,13 @@
 #    By: smorty <smorty@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/12 16:55:12 by smorty            #+#    #+#              #
-#    Updated: 2019/08/12 20:03:55 by smorty           ###   ########.fr        #
+#    Updated: 2019/08/14 16:26:49 by smorty           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME := smorty.filler
 
-SRCSFILES := main.c init.c read_input.c solve.c
+SRCSFILES := main.c init.c read_input.c heat_map.c solve.c utility.c
 
 SRCDIR := srcs/
 
