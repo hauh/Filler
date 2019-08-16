@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 23:05:05 by smorty            #+#    #+#             */
-/*   Updated: 2019/08/14 21:43:15 by smorty           ###   ########.fr       */
+/*   Updated: 2019/08/16 23:42:32 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,22 +40,19 @@ static char	*gnl(char **tail)
 
 	if ((r = read(0, buf, BUFF_SIZE)) < 0)
 		error();
-	if (r)
-	{
-		buf[r] = 0;
-		p = *tail;
-		if (!(*tail = ft_strjoin(*tail, buf)))
-			error();
-		free(p);
-	}
+	if (!r && !**tail)
+		return (NULL);
+	buf[r] = 0;
+	p = *tail;
+	if (!(*tail = ft_strjoin(*tail, buf)))
+		error();
+	free(p);
 	p = *tail;
 	while (*p && *p != '\n')
 		++p;
-	if (*p || (!r && p != *tail))
-		return (output_line(*tail, p));
-	if (r)
+	if (!*p && r)
 		return (gnl(tail));
-	return (NULL);
+	return (output_line(*tail, p));
 }
 
 char		*read_input(void)
@@ -72,7 +69,8 @@ char		*read_input(void)
 	if (!(new = gnl(&tail)))
 	{
 		free(tail);
-		return (NULL);
+		return ((tail = NULL));
 	}
+	ft_printf("{*}%s<<<\n{*}", open("logs", O_WRONLY), new, 1);
 	return (new);
 }

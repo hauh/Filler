@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/12 16:21:23 by smorty            #+#    #+#             */
-/*   Updated: 2019/08/14 22:00:19 by smorty           ###   ########.fr       */
+/*   Updated: 2019/08/16 23:20:38 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,16 @@ void	error(void)
 int		main(void)
 {
 	t_filler	*bot;
-	char		buf;
+	char		*buf;
 
+	bot = NULL;
 	while (1)
-		if (read(0, &buf, 1) == 1)
+		if ((buf = read_input()))
 		{
-			bot = init();
-			break ;
-		}
-//	while (1)
-//		if (read(0, &buf, 1) == 1)
-//		{
-//			if (buf == '=')
-//				break ;
+			if (!bot)
+				bot = init(buf);
+			free(buf);
 			solve(bot);
-//		}
+		}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/12 16:22:01 by smorty            #+#    #+#             */
-/*   Updated: 2019/08/14 19:19:43 by smorty           ###   ########.fr       */
+/*   Updated: 2019/08/16 23:36:05 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,9 @@
 #include <strings.h>
 #include <errno.h>
 #include "libft.h"
+#include "ft_printf.h"
 
-#define BUFF_SIZE 49
+#define BUFF_SIZE 16
 #define	O_PLAYER -33
 #define	X_PLAYER -77
 
@@ -51,7 +52,7 @@ typedef struct	s_filler
 
 void		error(void);
 char		*read_input(void);
-t_filler	*init();
+t_filler	*init(char *player_line);
 void		read_board(int **board, int rows);
 void        heat_map(t_filler *bot);
 void		solve(t_filler *bot);

@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/12 19:53:59 by smorty            #+#    #+#             */
-/*   Updated: 2019/08/14 21:59:51 by smorty           ###   ########.fr       */
+/*   Updated: 2019/08/16 23:29:55 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,7 @@ void		read_board(int **board, int rows)
 	int		y;
 
 	y = 0;
-	line = read_input();
-	while (*line != ' ')
-	{
-		free(line);
-		line = read_input();
-	}
-	free(line);
+	free((line = read_input()));
 	while (rows--)
 	{
 		line = read_input();
@@ -43,7 +37,7 @@ void		read_board(int **board, int rows)
 	}
 }
 
-static t_piece	*get_piece(void)
+t_piece	*get_piece(void)
 {
 	t_piece	*new;
 	char	*line;
@@ -59,13 +53,13 @@ static t_piece	*get_piece(void)
 	while (*p != ' ')
 		++p;
 	new->width = ft_atoi(++p);
-	i = new->height;
 	free(line);
-	if (!(new->fig = (char **)malloc(sizeof(char *) * (i + 1))))
+	if (!(new->fig = (char **)malloc(sizeof(char *) * (new->height + 1))))
 		error();
+	i = 0;
+	while (i < new->height)
+		new->fig[i++] = read_input();
 	new->fig[i] = NULL;
-	while (i--)
-		new->fig[i] = read_input();
 	return (new);
 }
 
@@ -76,25 +70,30 @@ static int	check_fig_position(t_filler *bot, t_piece *token, int x, int y)
 	int pos_value;
 	int intersections;
 
-	if (x < 0 || y < 0)
-		return (0);
+	if (x < 0 || y < 0 || x + token->width > bot->width || y + token->height > bot->height)
+		return (0xffff);
 	intersections = 0;
 	pos_value = 0;
-	t_y = token->height;
-	while (t_y--)
+	t_y = 0;
+	while (t_y < token->height)
 	{
-		t_x = token->width;
-		while (t_x--)
+		t_x = 0;
+		while (t_x < token->width)
 		{
-			if (bot->board[y + t_y][x + t_x] == bot->opponent)
-				return (0);
-			if (bot->board[y + t_y][x + t_x] == bot->player && token->fig[t_y][t_x] == '*' && ++intersections > 1)
-				return(0);
-			if (token->fig[t_y][t_x] == '*' && bot->board[y + t_y][x + t_x] != bot->player)
-				pos_value += bot->board[y + t_y][x + t_x];
+			if (token->fig[t_y][t_x] == '*')
+			{
+				if (bot->board[y + t_y][x + t_x] == bot->opponent)
+					return (0xffff);
+				if (bot->board[y + t_y][x + t_x] == bot->player && ++intersections > 1)
+					return (0xffff);
+				if (bot->board[y + t_y][x + t_x] != bot->player)
+					pos_value += bot->board[y + t_y][x + t_x];
+			}
+			++t_x;
 		}
+		++t_y;
 	}
-	return (intersections == 1 ? pos_value : 0);
+	return (intersections == 1 ? pos_value : 0xffff);
 }
 
 static void	check_spot(t_filler *bot, t_piece *token, int x, int y)
@@ -103,21 +102,23 @@ static void	check_spot(t_filler *bot, t_piece *token, int x, int y)
 	int t_y;
 	int pos_value;
 
-	t_y = token->height;
-	while (t_y--)
-		if (y + t_y < bot->height)
+	t_y = 0;
+	while (t_y < token->height)
+	{
+		t_x = 0;
+		while (t_x < token->width)
 		{
-			t_x = token->width;
-			while (t_x--)
-				if (x + t_x < bot->width
-					&& (pos_value = check_fig_position(bot, token, x - t_x, y - t_y))
-					&& bot->move->val < pos_value)
-					{
-						bot->move->val = pos_value;
-						bot->move->x = x - t_x;
-						bot->move->y = y - t_y;
-					}
+			pos_value = check_fig_position(bot, token, x - t_x, y - t_y);
+			if (bot->move->val > pos_value)
+			{
+				bot->move->val = pos_value;
+				bot->move->x = x - t_x;
+				bot->move->y = y - t_y;
+			}
+			++t_x;
 		}
+		++t_y;
+	}
 }
 
 void	solve_board(t_filler *bot, t_piece *token)
@@ -125,19 +126,22 @@ void	solve_board(t_filler *bot, t_piece *token)
 	int x;
 	int y;
 
-	y = bot->height;
-	while (y--)
+	y = 0;
+	while (y < bot->height)
 	{
-		x = bot->width;
-		while (x--)
+		x = 0;
+		while (x < bot->width)
+		{
 			if (bot->board[y][x] == bot->player)
 				check_spot(bot, token, x, y);
+			++x;
+		}
+		++y;
 	}
 }
 
-void	clean_last_move(t_play *move, t_piece *token)
+void	clean_last_move(t_filler *bot, t_piece *token)
 {
-	char	buf;
 	int		i;
 
 	i = token->height;
@@ -145,11 +149,12 @@ void	clean_last_move(t_play *move, t_piece *token)
 		free(token->fig[i]);
 	free(token->fig);
 	free(token);
-	move->val = -1;
-	move->x = -1;
-	move->y = -1;
-	while (read(0, &buf, 1) > 0)
-		;
+	bot->move->val = 0xffff;
+	bot->move->x = 0;
+	bot->move->y = 0;
+	i = bot->height;
+	while (i--)
+		ft_bzero(bot->board[i], sizeof(int) * bot->width);
 }
 
 void		solve(t_filler *bot)
@@ -160,9 +165,12 @@ void		solve(t_filler *bot)
 	token = get_piece();
 	heat_map(bot);
 	solve_board(bot, token);
-//	printf("1 1\n");
-	if (bot->move->val > 0)
-		printf("%d %d\n", bot->move->y, bot->move->x);
-//	else
-//	clean_last_move(bot->move, token);
+	if (bot->move->val != 0xffff)
+		ft_printf("%d %d\n", bot->move->y, bot->move->x);
+	else
+	{
+		ft_printf("0 0\n", 1);
+		exit(0);
+	}
+	clean_last_move(bot, token);
 }

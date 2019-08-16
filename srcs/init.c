@@ -6,21 +6,17 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/12 19:02:48 by smorty            #+#    #+#             */
-/*   Updated: 2019/08/14 20:14:32 by smorty           ###   ########.fr       */
+/*   Updated: 2019/08/16 22:24:45 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-static void	init_player(t_filler *bot)
+static void	init_player(t_filler *bot, char *player_line)
 {
-	char	*line;
-	char	*p;
-
-	p = (line = read_input());
-	while (*p != 'p')
-		++p;
-	if (*++p == '1')
+	while (*player_line != 'p')
+		++player_line;
+	if (*++player_line == '1')
 	{
 		bot->player = O_PLAYER;
 		bot->opponent = X_PLAYER;
@@ -30,7 +26,6 @@ static void	init_player(t_filler *bot)
 		bot->player = X_PLAYER;
 		bot->opponent = O_PLAYER;
 	}
-	free(line);
 }
 
 static int	**allocate_board(int x, int y)
@@ -64,18 +59,18 @@ static void	init_board(t_filler *bot)
 	bot->board = allocate_board(bot->width, bot->height);
 }
 
-t_filler	*init(void)
+t_filler	*init(char *player_line)
 {
 	t_filler *bot;
 
 	if (!(bot = (t_filler *)malloc(sizeof(t_filler))))
 		error();
-	init_player(bot);
+	init_player(bot, player_line);
 	init_board(bot);
 	if (!(bot->move = (t_play *)malloc(sizeof(t_play))))
 		error();
-	bot->move->val = -1;
-	bot->move->x = -1;
-	bot->move->y = -1;
+	bot->move->val = 0xffff;
+	bot->move->x = 0;
+	bot->move->y = 0;
 	return (bot);
 }

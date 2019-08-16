@@ -6,7 +6,7 @@
 #    By: smorty <smorty@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/12 16:55:12 by smorty            #+#    #+#              #
-#    Updated: 2019/08/14 16:26:49 by smorty           ###   ########.fr        #
+#    Updated: 2019/08/16 15:36:46 by smorty           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ CC := gcc -Wall -Werror -Wextra
 all: $(NAME)
 
 $(NAME): $(LFT) $(OBJ)
-	@$(CC) $^ -o $@
+	@$(CC) $^ srcs/ft_printf/libftprintf.a -o $@
 	@printf "\r\e[J\e[32m$@\e[0m done!\n\e[?25h"
 
 $(LFT):
@@ -42,7 +42,7 @@ $(LFT):
 
 $(OBJDIR)%.o: %.c
 	@mkdir -p '$(@D)'
-	@$(CC) -I$(INCLUDE) -I./$(LFTDIR) -c $< -o $@
+	@$(CC) -I$(INCLUDE) -I./$(LFTDIR) -I./srcs/ft_printf/includes/ -c $< -o $@
 	@printf "\r\e[?25l\e[Jcompiling \e[32m$(notdir $^)\e[0m"
 
 clean:

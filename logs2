@@ -1,12 +1,4 @@
-# -------------- VM  version 1.1 ------------- #
-#                                              #
-# 42 / filler VM Developped by: Hcao - Abanlin #
-#                                              #
-# -------------------------------------------- #
-launched ./smorty.filler
-$$$ exec p1 : [./smorty.filler]
-launched resources/players/abanlin.filler
-$$$ exec p2 : [resources/players/abanlin.filler]
+47292$ exec p2 : [resources/players/hcao.filler]
 Plateau 15 17:
     01234567890123456
 000 .................
@@ -24,8 +16,6 @@ Plateau 15 17:
 012 ..............X..
 013 .................
 014 .................
-Piece 1 2:
-**
-Player with O: error on input
-== O fin: 0
-== X fin: 0
+Piece 2 3:
+*..
+**.
