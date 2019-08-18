@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/14 15:35:09 by smorty            #+#    #+#             */
-/*   Updated: 2019/08/16 22:47:30 by smorty           ###   ########.fr       */
+/*   Updated: 2019/08/18 15:17:11 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	warm_up(t_filler *bot, int x, int y, int temperature)
 	return (1);
 }
 
-static int  is_cold(t_filler *bot)
+static int	is_cold(t_filler *bot)
 {
 	int x;
 	int y;
@@ -49,34 +49,54 @@ static int  is_cold(t_filler *bot)
 	return (0);
 }
 
-void        heat_map(t_filler *bot)
+static void	init_warmth(t_filler *bot)
 {
 	int x;
 	int y;
-	int temperature;
-	int check;
+	int ops_count;
 
-	temperature = 1;
+	ops_count = 0;
 	y = bot->height;
 	while (y--)
 	{
 		x = bot->width;
 		while (x--)
 			if (bot->board[y][x] == bot->opponent)
-				warm_up(bot, x, y, temperature);
+			{
+				warm_up(bot, x, y, 1);
+				++ops_count;
+			}
 	}
-	check = 1;
-	while (is_cold(bot) && check)
+	if (ops_count == bot->opp_size)
+		bot->opp_blocked = 1;
+	else
+		bot->opp_size = ops_count;
+}
+
+void		heat_map(t_filler *bot)
+{
+	int x;
+	int y;
+	int temperature;
+	int check;
+
+	init_warmth(bot);
+	if (!bot->opp_blocked)
 	{
-		check = 0;
-		y = bot->height;
-		while (y--)
+		check = 1;
+		temperature = 1;
+		while (is_cold(bot) && check)
 		{
-			x = bot->width;
-			while (x--)
-				if (bot->board[y][x] == temperature)
-					check = warm_up(bot, x, y, temperature + 1);
+			check = 0;
+			y = bot->height;
+			while (y--)
+			{
+				x = bot->width;
+				while (x--)
+					if (bot->board[y][x] == temperature)
+						check = warm_up(bot, x, y, temperature + 1);
+			}
+			++temperature;
 		}
-		++temperature;
 	}
 }

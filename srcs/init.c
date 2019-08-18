@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/12 19:02:48 by smorty            #+#    #+#             */
-/*   Updated: 2019/08/16 22:24:45 by smorty           ###   ########.fr       */
+/*   Updated: 2019/08/17 15:48:50 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,7 @@ t_filler	*init(char *player_line)
 	bot->move->val = 0xffff;
 	bot->move->x = 0;
 	bot->move->y = 0;
+	bot->opp_size = 0;
+	bot->opp_blocked = 0;
 	return (bot);
 }
