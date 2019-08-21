@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 23:05:05 by smorty            #+#    #+#             */
-/*   Updated: 2019/08/16 23:42:32 by smorty           ###   ########.fr       */
+/*   Updated: 2019/08/19 19:11:05 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,5 @@ char		*read_input(void)
 		free(tail);
 		return ((tail = NULL));
 	}
-	ft_printf("{*}%s<<<\n{*}", open("logs", O_WRONLY), new, 1);
 	return (new);
 }
