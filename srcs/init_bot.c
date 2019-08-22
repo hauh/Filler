@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   init_bot.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/12 19:02:48 by smorty            #+#    #+#             */
-/*   Updated: 2019/08/17 15:48:50 by smorty           ###   ########.fr       */
+/*   Updated: 2019/08/22 21:53:03 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static void	init_board(t_filler *bot)
 	bot->board = allocate_board(bot->width, bot->height);
 }
 
-t_filler	*init(char *player_line)
+t_filler	*init_bot(char *player_line)
 {
 	t_filler *bot;
 
