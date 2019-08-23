@@ -6,14 +6,13 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/12 16:22:01 by smorty            #+#    #+#             */
-/*   Updated: 2019/08/22 22:02:25 by smorty           ###   ########.fr       */
+/*   Updated: 2019/08/23 18:02:37 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FILLER_H
 # define FILLER_H
 
-#include <stdio.h> //remove
 #include <fcntl.h>
 #include <unistd.h>
 #include <strings.h>

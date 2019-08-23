@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/22 22:56:54 by smorty            #+#    #+#             */
-/*   Updated: 2019/08/22 23:01:47 by smorty           ###   ########.fr       */
+/*   Updated: 2019/08/23 21:43:51 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,12 @@ static t_filler_vis	*init_filler(void)
 	if (!(game = (t_filler_vis *)malloc(sizeof(t_filler_vis))))
 		exit(-1);
 	buf = read_input();
-	while (*buf != '$')
+	while (*buf != 'l')
 	{
 		free(buf);
 		buf = read_input();
 	}
+	free(buf);
 	game->p1_name = get_name();
 	free((buf = read_input()));
 	game->p2_name = get_name();

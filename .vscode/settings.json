@@ -4,6 +4,9 @@
 		"glgl.h": "c",
 		"sdl.h": "c",
 		"sdl_video.h": "c",
-		"sdl_version.h": "c"
+		"sdl_version.h": "c",
+		"filler_visualizer.h": "c",
+		"libft.h": "c",
+		"sdl_main.h": "c"
 	}
 }

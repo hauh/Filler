@@ -1,30 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   shared.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/08/12 16:21:23 by smorty            #+#    #+#             */
-/*   Updated: 2019/08/23 18:08:43 by smorty           ###   ########.fr       */
+/*   Created: 2019/08/23 18:07:37 by smorty            #+#    #+#             */
+/*   Updated: 2019/08/23 18:08:37 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
+#include "filler_visualizer.h"
 
-int		main(void)
+void	error(void)
 {
-	t_filler		*bot;
-	char			*buf;
-
-	bot = NULL;
-	while (1)
-		if ((buf = read_input()))
-		{
-			if (!bot)
-				bot = init_bot(buf);
-			free(buf);
-			solve(bot);
-		}
-	return (0);
+	ft_putstr(strerror(errno));
+	exit(-1);
 }
