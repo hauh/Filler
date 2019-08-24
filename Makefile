@@ -6,7 +6,7 @@
 #    By: smorty <smorty@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/12 16:55:12 by smorty            #+#    #+#              #
-#    Updated: 2019/08/23 18:18:37 by smorty           ###   ########.fr        #
+#    Updated: 2019/08/24 00:20:33 by smorty           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,9 +30,11 @@ LFTPRINTFDIR := $(SRCDIR)ft_printf/
 
 LFTPRINTF := $(LFTPRINTFDIR)libftprintf.a
 
-SDL2 := $(SRCDIR)sdl2/lib/libSDL2-2.0.0.dylib
+SDL2DIR := $(SRCDIR)sdl2/
 
-INCLUDE := -I./srcs/sdl2/include/SDL2 -I./include -I./$(LFTDIR) -I./$(LFTPRINTFDIR)includes/
+SDL2 := $(SDL2DIR)lib/libSDL2-2.0.0.dylib $(SDL2DIR)sdl2_ttf/lib/libSDL2_ttf-2.0.0.dylib
+
+INCLUDE := -I./include -I./$(SDL2DIR)/include/SDL2 -I./$(SDL2DIR)/sdl2_ttf/include/SDL2 -I./$(LFTDIR) -I./$(LFTPRINTFDIR)includes/
 
 SRCS := $(addprefix $(SRCDIR), $(SRCSFILES))
 

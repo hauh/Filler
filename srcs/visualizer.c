@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/20 21:42:24 by smorty            #+#    #+#             */
-/*   Updated: 2019/08/23 23:56:45 by smorty           ###   ########.fr       */
+/*   Updated: 2019/08/24 14:51:48 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,26 @@ void			put_numbers(SDL_Renderer *renderer, t_filler_vis *game)
 	{
 		j = game->width + 4;
 		while (j-- > 4)
-		{
-			if (game->board_states->board[i][j] == 'O' || game->board_states->board[i][j] == '0')
+			if (game->board_states->board[i][j] == 'O' || game->board_states->board[i][j] == 'o')
 				++os;
 			else if (game->board_states->board[i][j] == 'X' || game->board_states->board[i][j] == 'x')
 				++xs;
-		}
 	}
+	SDL_Surface *surface;
+	SDL_Texture *texture;
+	char *text;
+	SDL_Color color = {155, 155, 0, 0};
+
+	text = ft_strjoin(game->p1_name, " O: ");
+	text = ft_strjoin(text, ft_itoa(os));
+	surface = TTF_RenderText_Solid(game->font, text, color);
+	texture = SDL_CreateTextureFromSurface(renderer, surface);
+	SDL_RenderCopy(renderer, texture, NULL, get_rectangle(100, FILLER_SCREEN_HEIGHT - 100, 500, 100));
+	text = ft_strjoin(game->p2_name, " X: ");
+	text = ft_strjoin(text, ft_itoa(xs));
+	surface = TTF_RenderText_Solid(game->font, text, color);
+	texture = SDL_CreateTextureFromSurface(renderer, surface);
+	SDL_RenderCopy(renderer, texture, NULL, get_rectangle(800, FILLER_SCREEN_HEIGHT - 100, 500, 100));
 }
 
 void			render_map(SDL_Renderer *renderer, t_filler_vis *game)
@@ -55,12 +68,9 @@ void			render_map(SDL_Renderer *renderer, t_filler_vis *game)
 	int height;
 	int width;
 
-	int os;
-	int xs;
-
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
 	SDL_RenderClear(renderer);
-	height = FILLER_SCREEN_HEIGH / (game->height + 2);
+	height = FILLER_SCREEN_HEIGHT / (game->height + 2);
 	width = FILLER_SCREEN_WIDTH / (game->width + 2);
 	i = 0;
 	while (i < game->height)

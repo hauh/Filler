@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/22 22:56:54 by smorty            #+#    #+#             */
-/*   Updated: 2019/08/23 21:43:51 by smorty           ###   ########.fr       */
+/*   Updated: 2019/08/24 14:47:10 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,8 @@ void				init_visualizer(SDL_Window **window,
 		exit (-1);
 	}
 	*game = init_filler();
+	TTF_Init();
+	(*game)->font = TTF_OpenFont("/Users/smorty/42/filler/srcs/OpenSans-Semibold.ttf", 20);
+	if (!(*game)->font)
+		ft_printf("TTF_Init: %s\n", TTF_GetError());
 }

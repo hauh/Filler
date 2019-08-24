@@ -7,6 +7,7 @@
 		"sdl_version.h": "c",
 		"filler_visualizer.h": "c",
 		"libft.h": "c",
-		"sdl_main.h": "c"
+		"sdl_main.h": "c",
+		"sdl_ttf.h": "c"
 	}
 }
