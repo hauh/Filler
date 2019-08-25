@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/12 19:53:59 by smorty            #+#    #+#             */
-/*   Updated: 2019/08/22 21:52:39 by smorty           ###   ########.fr       */
+/*   Updated: 2019/08/25 16:00:17 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static int		*get_coords(t_piece *new)
 	int		i;
 
 	if (!(coords = (int *)malloc(sizeof(int) * new->height * new->width)))
-		error();
+		strerror(errno);
 	i = 0;
 	new->size = 0;
 	while (i < new->height)
@@ -71,7 +71,7 @@ static t_piece	*get_piece(void)
 	int		i;
 
 	if (!(new = (t_piece *)malloc(sizeof(t_piece))))
-		error();
+		error(strerror(errno));
 	p = (line = read_input());
 	while (*p != ' ')
 		++p;

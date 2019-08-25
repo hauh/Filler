@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/12 16:22:01 by smorty            #+#    #+#             */
-/*   Updated: 2019/08/23 18:02:37 by smorty           ###   ########.fr       */
+/*   Updated: 2019/08/25 16:39:46 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ typedef struct	s_filler
 	t_play	*move;
 }				t_filler;
 
-void		error(void);
+void		error(const char *error_msg);
 char		*read_input(void);
 t_filler	*init_bot(char *player_line);
 void        heat_map(t_filler *bot);

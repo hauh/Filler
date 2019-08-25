@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/12 19:02:48 by smorty            #+#    #+#             */
-/*   Updated: 2019/08/22 21:53:03 by smorty           ###   ########.fr       */
+/*   Updated: 2019/08/25 15:59:17 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@ static int	**allocate_board(int x, int y)
 	int **board;
 
 	if (!(board = (int **)malloc(sizeof(int *) * y)))
-		error();
+		error(strerror(errno));
 	while (y--)
 	{
 		if (!(board[y] = (int *)malloc(sizeof(int) * x)))
-			error();
+			error(strerror(errno));
 		ft_bzero(board[y], sizeof(int) * x);
 	}
 	return (board);
@@ -64,11 +64,11 @@ t_filler	*init_bot(char *player_line)
 	t_filler *bot;
 
 	if (!(bot = (t_filler *)malloc(sizeof(t_filler))))
-		error();
+		error(strerror(errno));
 	init_player(bot, player_line);
 	init_board(bot);
 	if (!(bot->move = (t_play *)malloc(sizeof(t_play))))
-		error();
+		error(strerror(errno));
 	bot->move->val = 0xffff;
 	bot->move->x = 0;
 	bot->move->y = 0;

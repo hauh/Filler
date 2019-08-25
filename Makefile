@@ -6,7 +6,7 @@
 #    By: smorty <smorty@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/12 16:55:12 by smorty            #+#    #+#              #
-#    Updated: 2019/08/24 00:20:33 by smorty           ###   ########.fr        #
+#    Updated: 2019/08/25 18:58:26 by smorty           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,27 +14,33 @@ NAME := smorty.filler
 
 VISUAL := filler_visual
 
-SRCSFILES := main.c init_bot.c read_input.c heat_map.c solver.c find_move.c shared.c
+SRCSFILES := $(addprefix filler/, main.c init_bot.c heat_map.c solver.c find_move.c) read_input.c shared.c
 
-SRCSFILES_VIS := visualizer.c init_visualizer.c read_input.c shared.c
+SRCSFILES_VIS := $(addprefix visualizer/, main.c init_visualizer.c read_board.c visualization.c put_score.c) read_input.c shared.c
 
 SRCDIR := srcs/
 
+LIBSDIR := libs/
+
 OBJDIR := $(SRCDIR)obj/
 
-LFTDIR := $(SRCDIR)libft/
+LFTDIR := $(SRCDIR)$(LIBSDIR)libft/
 
 LFT := $(LFTDIR)libft.a
 
-LFTPRINTFDIR := $(SRCDIR)ft_printf/
+LFTPRINTFDIR := $(SRCDIR)$(LIBSDIR)ft_printf/
 
 LFTPRINTF := $(LFTPRINTFDIR)libftprintf.a
 
-SDL2DIR := $(SRCDIR)sdl2/
+SDL2DIR := $(SRCDIR)$(LIBSDIR)sdl2/
 
-SDL2 := $(SDL2DIR)lib/libSDL2-2.0.0.dylib $(SDL2DIR)sdl2_ttf/lib/libSDL2_ttf-2.0.0.dylib
+SDL2TTFDIR := $(SRCDIR)$(LIBSDIR)sdl2_ttf/
 
-INCLUDE := -I./include -I./$(SDL2DIR)/include/SDL2 -I./$(SDL2DIR)/sdl2_ttf/include/SDL2 -I./$(LFTDIR) -I./$(LFTPRINTFDIR)includes/
+SDL2 := $(SDL2DIR)lib/libSDL2-2.0.0.dylib
+
+SDL2TTF := $(SDL2TTFDIR)lib/libSDL2_ttf-2.0.0.dylib
+
+INCLUDE := -I./include -I./$(SDL2DIR)/include/SDL2 -I./$(SDL2TTFDIR)/include/SDL2 -I./$(LFTDIR) -I./$(LFTPRINTFDIR)includes/
 
 SRCS := $(addprefix $(SRCDIR), $(SRCSFILES))
 
@@ -53,7 +59,7 @@ $(NAME): $(LFT) $(LFTPRINTF) $(OBJ)
 	@printf "\r\e[J\e[32m$@\e[0m done!\n\e[?25h"
 
 $(VISUAL): $(LFT) $(LFTPRINTF) $(OBJ_VIS)
-	@$(CC) $^ $(SDL2) -o $@
+	@$(CC) $^ $(SDL2) $(SDL2TTF) -o $@
 	@printf "\r\e[J\e[32m$@\e[0m done!\n\e[?25h"
 
 $(LFT):
@@ -72,6 +78,7 @@ $(OBJDIR)%.o: %.c
 clean:
 	@rm -rf $(OBJDIR)
 	@$(MAKE) -C $(LFTDIR) fclean
+	@$(MAKE) -C $(LFTPRINTFDIR) fclean
 
 fclean: clean
 	@rm -f $(NAME)

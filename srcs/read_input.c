@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 23:05:05 by smorty            #+#    #+#             */
-/*   Updated: 2019/08/23 18:09:21 by smorty           ###   ########.fr       */
+/*   Updated: 2019/08/25 16:00:40 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static char	*output_line(char *tail, char *p)
 	char *tail0;
 
 	if (!(line = (char *)malloc(sizeof(char) * (p - tail + 1))))
-		error();
+		error(strerror(errno));
 	p = line;
 	tail0 = tail;
 	while (*tail && *tail != '\n')
@@ -39,13 +39,13 @@ static char	*gnl(char **tail)
 	int		r;
 
 	if ((r = read(0, buf, BUFF_SIZE)) < 0)
-		error();
+		error(strerror(errno));
 	if (!r && !**tail)
 		return (NULL);
 	buf[r] = 0;
 	p = *tail;
 	if (!(*tail = ft_strjoin(*tail, buf)))
-		error();
+		error(strerror(errno));
 	free(p);
 	p = *tail;
 	while (*p && *p != '\n')
@@ -63,7 +63,7 @@ char		*read_input(void)
 	if (!tail)
 	{
 		if (!(tail = (char *)malloc(sizeof(char))))
-			error();
+			error(strerror(errno));
 		*tail = 0;
 	}
 	if (!(new = gnl(&tail)))

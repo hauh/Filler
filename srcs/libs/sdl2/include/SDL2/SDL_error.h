@@ -37,7 +37,7 @@ extern "C" {
 #endif
 
 /* Public functions */
-/* SDL_SetError() unconditionally returns -1. */
+/* SDL_Seterror(strerror(errno)) unconditionally returns -1. */
 extern DECLSPEC int SDLCALL SDL_SetError(SDL_PRINTF_FORMAT_STRING const char *fmt, ...) SDL_PRINTF_VARARG_FUNC(1);
 extern DECLSPEC const char *SDLCALL SDL_GetError(void);
 extern DECLSPEC void SDLCALL SDL_ClearError(void);
