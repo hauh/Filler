@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/12 16:22:01 by smorty            #+#    #+#             */
-/*   Updated: 2019/08/25 16:39:46 by smorty           ###   ########.fr       */
+/*   Updated: 2019/08/26 22:12:15 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void		error(const char *error_msg);
 char		*read_input(void);
 t_filler	*init_bot(char *player_line);
 void        heat_map(t_filler *bot);
-void		solve(t_filler *bot);
+int			solve(t_filler *bot);
 void		find_move(t_filler *bot, t_piece *token);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/12 19:53:59 by smorty            #+#    #+#             */
-/*   Updated: 2019/08/25 16:00:17 by smorty           ###   ########.fr       */
+/*   Updated: 2019/08/26 22:13:27 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ static int		*get_coords(t_piece *new)
 	new->size = 0;
 	while (i < new->height)
 	{
-		s = (line = read_input());
+		line = read_input();
+		s = line;
 		while (*s)
 		{
 			if (*s == '*')
@@ -68,11 +69,11 @@ static t_piece	*get_piece(void)
 	t_piece	*new;
 	char	*line;
 	char	*p;
-	int		i;
 
 	if (!(new = (t_piece *)malloc(sizeof(t_piece))))
 		error(strerror(errno));
-	p = (line = read_input());
+	line = read_input();
+	p = line;
 	while (*p != ' ')
 		++p;
 	new->height = ft_atoi(++p);
@@ -81,7 +82,6 @@ static t_piece	*get_piece(void)
 	new->width = ft_atoi(++p);
 	free(line);
 	new->coords = get_coords(new);
-	i = -1;
 	return (new);
 }
 
@@ -99,7 +99,7 @@ static void		clean_last_move(t_filler *bot, t_piece *token)
 		ft_bzero(bot->board[i], sizeof(int) * bot->width);
 }
 
-void			solve(t_filler *bot)
+int				solve(t_filler *bot)
 {
 	t_piece	*token;
 
@@ -112,8 +112,10 @@ void			solve(t_filler *bot)
 		ft_printf("%d %d\n", bot->move->y, bot->move->x);
 	else
 	{
-		ft_printf("0 0\n", 1);
-		exit(0);
+		ft_printf("0 0\n");
+		clean_last_move(bot, token);
+		return (1);
 	}
 	clean_last_move(bot, token);
+	return (0);
 }

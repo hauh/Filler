@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/12 19:02:48 by smorty            #+#    #+#             */
-/*   Updated: 2019/08/25 15:59:17 by smorty           ###   ########.fr       */
+/*   Updated: 2019/08/26 16:50:27 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ static void	init_board(t_filler *bot)
 	char *line;
 	char *p;
 
-	p = (line = read_input());
+	line = read_input();
+	p = line;
 	while (*p != ' ')
 		++p;
 	bot->height = ft_atoi(++p);

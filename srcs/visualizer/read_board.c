@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/25 16:10:15 by smorty            #+#    #+#             */
-/*   Updated: 2019/08/25 22:44:46 by smorty           ###   ########.fr       */
+/*   Updated: 2019/08/26 22:46:19 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,25 @@ static void		get_score(t_board *new, int y)
 	new->xs = xs;
 }
 
+static char		**get_board(char *first_line, int y)
+{
+	char	**board;
+	int		i;
+
+	if (!(board = (char **)malloc(sizeof(char *) * (y + 2))))
+		error(strerror(errno));
+	i = 0;
+	board[i++] = first_line;
+	while (i <= y)
+		board[i++] = read_input();
+	board[i] = NULL;
+	return (board);
+}
+
 static t_board	*new_board(t_board *prev, int y)
 {
 	t_board	*new;
 	char	*buf;
-	int		i;
 
 	if (!(new = (t_board *)malloc(sizeof(t_board))))
 		error(strerror(errno));
@@ -57,13 +71,7 @@ static t_board	*new_board(t_board *prev, int y)
 			prev->last = 1;
 		return (NULL);
 	}
-	if (!(new->board = (char **)malloc(sizeof(char *) * (y + 2))))
-		error(strerror(errno));
-	i = 0;
-	new->board[i++] = buf;
-	while (i <= y)
-		new->board[i++] = read_input();
-	new->board[i] = NULL;
+	new->board = get_board(buf, y);
 	new->right = NULL;
 	new->left = prev;
 	if (prev)

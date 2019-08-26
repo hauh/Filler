@@ -6,7 +6,7 @@
 #    By: smorty <smorty@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/12 16:55:12 by smorty            #+#    #+#              #
-#    Updated: 2019/08/25 18:58:26 by smorty           ###   ########.fr        #
+#    Updated: 2019/08/26 23:19:06 by smorty           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@ VISUAL := filler_visual
 
 SRCSFILES := $(addprefix filler/, main.c init_bot.c heat_map.c solver.c find_move.c) read_input.c shared.c
 
-SRCSFILES_VIS := $(addprefix visualizer/, main.c init_visualizer.c read_board.c visualization.c put_score.c) read_input.c shared.c
+SRCSFILES_VIS := $(addprefix visualizer/,\
+	main.c init_visualizer.c read_board.c visualization_loop.c visualize.c render_board.c utility.c) read_input.c shared.c
 
 SRCDIR := srcs/
 
