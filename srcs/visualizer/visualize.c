@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/25 18:15:13 by smorty            #+#    #+#             */
-/*   Updated: 2019/08/26 23:39:59 by smorty           ###   ########.fr       */
+/*   Updated: 2019/08/27 19:41:09 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	put_score(t_filler_vis *game)
 	text = ft_itoa(game->board_states->os);
 	put_text(game, &rect, text, 30);
 	free(text);
-	rect.x = FILLER_SCREEN_WIDTH / 3;
+	rect.x = ft_strlen(game->p1_name) * 30 + 400;
 	put_text(game, &rect, "P2 ", 30);
 	put_text(game, &rect, game->p2_name, 30);
 	put_text(game, &rect, ": ", 30);

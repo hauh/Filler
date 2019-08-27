@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/22 21:56:50 by smorty            #+#    #+#             */
-/*   Updated: 2019/08/26 23:38:08 by smorty           ###   ########.fr       */
+/*   Updated: 2019/08/27 15:17:34 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,16 @@
 #define X_COLOR_1 0xAB0F58
 #define O_COLOR_2 0xE01507
 #define X_COLOR_2 0x07D9E0
+#define O_COLOR_3 0x387923
+#define X_COLOR_3 0x9A0FDB
+#define O_COLOR_4 0xB047E5
+#define X_COLOR_4 0x07D9E0
+#define O_COLOR_5 0x802810
+#define X_COLOR_5 0xEAC965
+#define O_COLOR_6 0xB0fE44
+#define X_COLOR_6 0xF5623E
+#define O_COLOR_7 0xFF52A0
+#define X_COLOR_7 0x444A0C
 
 typedef struct	s_board
 {

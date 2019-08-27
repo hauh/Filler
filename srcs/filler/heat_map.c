@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/14 15:35:09 by smorty            #+#    #+#             */
-/*   Updated: 2019/08/18 15:17:11 by smorty           ###   ########.fr       */
+/*   Updated: 2019/08/27 23:30:42 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,12 @@ static int	warm_up(t_filler *bot, int x, int y, int temperature)
 	return (1);
 }
 
-static int	is_cold(t_filler *bot)
+static void	warmth_from_walls(t_filler *bot, int temperature)
 {
 	int x;
 	int y;
+	int min_x;
+	int min_y;
 
 	y = bot->height;
 	while (y--)
@@ -44,33 +46,33 @@ static int	is_cold(t_filler *bot)
 		x = bot->width;
 		while (x--)
 			if (!bot->board[y][x])
-				return (1);
+			{
+				min_x = x < bot->height / 2 ? x : bot->height - x - 1;
+				min_y = y < bot->height / 2 ? y : bot->height - y - 1;
+				bot->board[y][x] = temperature + min_x < min_y ? min_x : min_y;
+			}
 	}
-	return (0);
 }
 
 static void	init_warmth(t_filler *bot)
 {
 	int x;
 	int y;
-	int ops_count;
+	int opp_count;
 
-	ops_count = 0;
+	opp_count = 0;
 	y = bot->height;
 	while (y--)
 	{
 		x = bot->width;
 		while (x--)
 			if (bot->board[y][x] == bot->opponent)
-			{
-				warm_up(bot, x, y, 1);
-				++ops_count;
-			}
+				opp_count += warm_up(bot, x, y, 1);
 	}
-	if (ops_count == bot->opp_size)
+	if (opp_count == bot->opp_size)
 		bot->opp_blocked = 1;
 	else
-		bot->opp_size = ops_count;
+		bot->opp_size = opp_count;
 }
 
 void		heat_map(t_filler *bot)
@@ -78,25 +80,26 @@ void		heat_map(t_filler *bot)
 	int x;
 	int y;
 	int temperature;
-	int check;
+	int warmed;
 
 	init_warmth(bot);
+	temperature = 0;
 	if (!bot->opp_blocked)
 	{
-		check = 1;
-		temperature = 1;
-		while (is_cold(bot) && check)
+		warmed = 1;
+		while (warmed)
 		{
-			check = 0;
+			warmed = 0;
+			++temperature;
 			y = bot->height;
 			while (y--)
 			{
 				x = bot->width;
 				while (x--)
 					if (bot->board[y][x] == temperature)
-						check = warm_up(bot, x, y, temperature + 1);
+						warmed = warm_up(bot, x, y, temperature + 1);
 			}
-			++temperature;
 		}
 	}
+	warmth_from_walls(bot, temperature + 5);
 }

@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/25 16:10:15 by smorty            #+#    #+#             */
-/*   Updated: 2019/08/26 22:46:19 by smorty           ###   ########.fr       */
+/*   Updated: 2019/08/27 16:51:24 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,6 @@ static t_board	*new_board(t_board *prev, int y)
 	t_board	*new;
 	char	*buf;
 
-	if (!(new = (t_board *)malloc(sizeof(t_board))))
-		error(strerror(errno));
 	buf = read_input();
 	while (buf && *buf != ' ')
 	{
@@ -71,6 +69,8 @@ static t_board	*new_board(t_board *prev, int y)
 			prev->last = 1;
 		return (NULL);
 	}
+	if (!(new = (t_board *)malloc(sizeof(t_board))))
+		error(strerror(errno));
 	new->board = get_board(buf, y);
 	new->right = NULL;
 	new->left = prev;

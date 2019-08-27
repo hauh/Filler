@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/12 19:53:59 by smorty            #+#    #+#             */
-/*   Updated: 2019/08/26 22:13:27 by smorty           ###   ########.fr       */
+/*   Updated: 2019/08/27 19:53:20 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,31 +91,27 @@ static void		clean_last_move(t_filler *bot, t_piece *token)
 
 	free(token->coords);
 	free(token);
-	bot->move->val = 0xffff;
-	bot->move->x = 0;
-	bot->move->y = 0;
-	i = bot->height;
-	while (i--)
-		ft_bzero(bot->board[i], sizeof(int) * bot->width);
+	bot->move->x = -1;
+	bot->move->y = -1;
+	if (!bot->opp_blocked)
+	{
+		i = bot->height;
+		while (i--)
+			ft_bzero(bot->board[i], sizeof(int) * bot->width);
+	}
 }
 
 int				solve(t_filler *bot)
 {
 	t_piece	*token;
 
+	bot->move->val = 0xffff;
 	read_board(bot->board, bot->height);
 	token = get_piece();
 	if (!bot->opp_blocked)
 		heat_map(bot);
 	find_move(bot, token);
-	if (bot->move->val != 0xffff)
-		ft_printf("%d %d\n", bot->move->y, bot->move->x);
-	else
-	{
-		ft_printf("0 0\n");
-		clean_last_move(bot, token);
-		return (1);
-	}
+	ft_printf("%d %d\n", bot->move->y, bot->move->x);
 	clean_last_move(bot, token);
-	return (0);
+	return (bot->move->val == 0xffff ? 1 : 0);
 }

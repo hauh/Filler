@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/25 16:09:33 by smorty            #+#    #+#             */
-/*   Updated: 2019/08/26 23:35:02 by smorty           ###   ########.fr       */
+/*   Updated: 2019/08/27 16:54:58 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,33 +24,31 @@ static void	print_board(char **board)
 
 static void	change_colors(t_filler_vis *game, int color_num)
 {
-	if (color_num == 1)
-	{
-		game->p1_color->r = (O_COLOR_1 >> 16) & 0xff;
-		game->p1_color->g = (O_COLOR_1 >> 8) & 0xff;
-		game->p1_color->b = O_COLOR_1 & 0xff;
-		game->p2_color->r = (X_COLOR_1 >> 16) & 0xff;
-		game->p2_color->g = (X_COLOR_1 >> 8) & 0xff;
-		game->p2_color->b = X_COLOR_1 & 0xff;
-	}
-	else if (color_num == 2)
-	{
-		game->p1_color->r = (O_COLOR_2 >> 16) & 0xff;
-		game->p1_color->g = (O_COLOR_2 >> 8) & 0xff;
-		game->p1_color->b = O_COLOR_2 & 0xff;
-		game->p2_color->r = (X_COLOR_2 >> 16) & 0xff;
-		game->p2_color->g = (X_COLOR_2 >> 8) & 0xff;
-		game->p2_color->b = X_COLOR_2 & 0xff;
-	}
-	else
-	{
-		game->p1_color->r = (O_COLOR_DEF >> 16) & 0xff;
-		game->p1_color->g = (O_COLOR_DEF >> 8) & 0xff;
-		game->p1_color->b = O_COLOR_DEF & 0xff;
-		game->p2_color->r = (X_COLOR_DEF >> 16) & 0xff;
-		game->p2_color->g = (X_COLOR_DEF >> 8) & 0xff;
-		game->p2_color->b = X_COLOR_DEF & 0xff;
-	}
+	int color1[8];
+	int color2[8];
+
+	color1[0] = O_COLOR_DEF;
+	color2[0] = X_COLOR_DEF;
+	color1[1] = O_COLOR_1;
+	color2[1] = X_COLOR_1;
+	color1[2] = O_COLOR_2;
+	color2[2] = X_COLOR_2;
+	color1[3] = O_COLOR_3;
+	color2[3] = X_COLOR_3;
+	color1[4] = O_COLOR_4;
+	color2[4] = X_COLOR_4;
+	color1[5] = O_COLOR_5;
+	color2[5] = X_COLOR_5;
+	color1[6] = O_COLOR_6;
+	color2[6] = X_COLOR_6;
+	color1[7] = O_COLOR_7;
+	color2[7] = X_COLOR_7;
+	game->p1_color->r = (color1[color_num] >> 16) & 0xff;
+	game->p1_color->g = (color1[color_num] >> 8) & 0xff;
+	game->p1_color->b = color1[color_num] & 0xff;
+	game->p2_color->r = (color2[color_num] >> 16) & 0xff;
+	game->p2_color->g = (color2[color_num] >> 8) & 0xff;
+	game->p2_color->b = color2[color_num] & 0xff;
 }
 
 static void	key_handler(SDL_Event *e, t_filler_vis *game, t_vis_status *status)
@@ -81,7 +79,7 @@ static void	key_handler(SDL_Event *e, t_filler_vis *game, t_vis_status *status)
 		status->controls = ~status->controls;
 	else if (e->key.keysym.sym == SDLK_BACKSPACE)
 	{
-		if (++status->color == 3)
+		if (++status->color == 8)
 			status->color = 0;
 		change_colors(game, status->color);
 	}
@@ -125,7 +123,12 @@ void		visualization_loop(t_filler_vis *game)
 				print_board(game->board_states->board);
 			speed_counter = status.speed;
 		}
-		if (SDL_PollEvent(&e) && e.type == SDL_KEYDOWN)
-			key_handler(&e, game, &status);
+		if (SDL_PollEvent(&e))
+		{
+			if (e.type == SDL_KEYDOWN)
+				key_handler(&e, game, &status);
+			if (e.type == SDL_WINDOWEVENT && e.window.event == SDL_WINDOWEVENT_CLOSE)
+				status.quit = 1;
+		}
 	}
 }
