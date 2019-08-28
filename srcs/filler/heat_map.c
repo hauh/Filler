@@ -6,13 +6,13 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/14 15:35:09 by smorty            #+#    #+#             */
-/*   Updated: 2019/08/27 23:30:42 by smorty           ###   ########.fr       */
+/*   Updated: 2019/08/28 21:53:00 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "filler.h"
+#include "filler_player.h"
 
-static int	warm_up(t_filler *bot, int x, int y, int temperature)
+static int	warm_up(t_filler *bot, int x, int y, const int temperature)
 {
 	if (x - 1 >= 0 && !bot->board[y][x - 1])
 		bot->board[y][x - 1] = temperature;
@@ -33,7 +33,7 @@ static int	warm_up(t_filler *bot, int x, int y, int temperature)
 	return (1);
 }
 
-static void	warmth_from_walls(t_filler *bot, int temperature)
+static void	warmth_from_walls(t_filler *bot, const int temperature)
 {
 	int x;
 	int y;

@@ -6,38 +6,35 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/22 21:56:50 by smorty            #+#    #+#             */
-/*   Updated: 2019/08/27 15:17:34 by smorty           ###   ########.fr       */
+/*   Updated: 2019/08/28 23:40:42 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FILLER_VISUALZIER_H
-#define FILLER_VISUALZIER_H
+#ifndef FILLER_VISUALIZER_H
+# define FILLER_VISUALIZER_H
 
-#include <errno.h>
-#include "SDL.h"
-#include "SDL_ttf.h"
-#include "ft_printf.h"
-#include "libft.h"
+# include "filler_shared.h"
+# include "SDL.h"
+# include "SDL_ttf.h"
 
-#define BUFF_SIZE 2
-#define FILLER_SCREEN_HEIGHT 1200
-#define FILLER_SCREEN_WIDTH 1920
-#define O_COLOR_DEF 0x00C800
-#define X_COLOR_DEF 0xE05A07
-#define O_COLOR_1 0x09279E
-#define X_COLOR_1 0xAB0F58
-#define O_COLOR_2 0xE01507
-#define X_COLOR_2 0x07D9E0
-#define O_COLOR_3 0x387923
-#define X_COLOR_3 0x9A0FDB
-#define O_COLOR_4 0xB047E5
-#define X_COLOR_4 0x07D9E0
-#define O_COLOR_5 0x802810
-#define X_COLOR_5 0xEAC965
-#define O_COLOR_6 0xB0fE44
-#define X_COLOR_6 0xF5623E
-#define O_COLOR_7 0xFF52A0
-#define X_COLOR_7 0x444A0C
+# define FILLER_SCREEN_HEIGHT 1200
+# define FILLER_SCREEN_WIDTH 1920
+# define O_COLOR_DEF 0x00C800
+# define X_COLOR_DEF 0xE05A07
+# define O_COLOR_1 0x09279E
+# define X_COLOR_1 0xAB0F58
+# define O_COLOR_2 0xE01507
+# define X_COLOR_2 0x07D9E0
+# define O_COLOR_3 0x387923
+# define X_COLOR_3 0x9A0FDB
+# define O_COLOR_4 0xB047E5
+# define X_COLOR_4 0x07D9E0
+# define O_COLOR_5 0x802810
+# define X_COLOR_5 0xEAC965
+# define O_COLOR_6 0xB0fE44
+# define X_COLOR_6 0xF5623E
+# define O_COLOR_7 0xFF52A0
+# define X_COLOR_7 0x444A0C
 
 typedef struct	s_board
 {
@@ -73,14 +70,13 @@ typedef struct	s_vis_status
 	int				color;
 }				t_vis_status;
 
-void		error(const char *error_msg);
-char		*read_input(void);
-void		init_visualizer(SDL_Window **window, t_filler_vis **game);
-void		get_next_board(t_filler_vis *game, int height);
-void 		visualization_loop(t_filler_vis *game);
-void		visualize(t_filler_vis *game, int cotrols);
-void		render_board(t_filler_vis *game);
-void		create_frame(t_filler_vis *game, int width, int height);
-void		put_text(t_filler_vis *game, SDL_Rect *rect, char *text, int scale);
+void			init_visualizer(SDL_Window **window, t_filler_vis **game);
+void			get_next_board(t_filler_vis *game, int height);
+void			visualization_loop(t_filler_vis *game);
+void			visualize(t_filler_vis *game, int cotrols);
+void			render_board(t_filler_vis *game);
+void			create_frame(t_filler_vis *game, int width, int height);
+void			put_text(t_filler_vis *game, SDL_Rect *rect,
+							const char *text, int scale);
 
 #endif

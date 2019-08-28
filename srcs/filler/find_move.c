@@ -6,13 +6,14 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/18 15:22:00 by smorty            #+#    #+#             */
-/*   Updated: 2019/08/27 21:46:21 by smorty           ###   ########.fr       */
+/*   Updated: 2019/08/28 22:35:49 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "filler.h"
+#include "filler_player.h"
 
-static int	check_spot(t_filler *bot, t_piece *token, int x, int y)
+static int	check_spot(const t_filler *bot, const t_piece *token,
+						const int x, const int y)
 {
 	int t_x;
 	int t_y;
@@ -37,7 +38,7 @@ static int	check_spot(t_filler *bot, t_piece *token, int x, int y)
 	return (overlaps ? pos_value : 0xffff);
 }
 
-void		find_move(t_filler *bot, t_piece *token)
+void		find_move(t_filler *bot, const t_piece *token)
 {
 	int x;
 	int y;

@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/25 18:15:13 by smorty            #+#    #+#             */
-/*   Updated: 2019/08/27 19:41:09 by smorty           ###   ########.fr       */
+/*   Updated: 2019/08/28 22:35:32 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	put_victory(t_filler_vis *game)
 {
 	SDL_Rect	rect;
-	char		*victor;
+	const char	*victor;
 
 	if (game->board_states->os > game->board_states->xs)
 		victor = game->p1_name;
@@ -61,7 +61,7 @@ static void	put_score(t_filler_vis *game)
 	free(text);
 }
 
-static void	put_controls(t_filler_vis *game, int controls)
+static void	put_controls(t_filler_vis *game, const int controls)
 {
 	SDL_Rect rect;
 
@@ -71,19 +71,20 @@ static void	put_controls(t_filler_vis *game, int controls)
 	put_text(game, &rect, "Tab: controls", 20);
 	if (!controls)
 		return ;
-	create_frame(game, 550, 370);
-	rect.x = (FILLER_SCREEN_WIDTH - 550) / 2 + 25;
-	rect.y = (FILLER_SCREEN_HEIGHT - 370) / 2 + 10;
+	create_frame(game, 620, 420);
+	rect.x = (FILLER_SCREEN_WIDTH - 620) / 2 + 25;
+	rect.y = (FILLER_SCREEN_HEIGHT - 420) / 2 + 10;
 	put_text(game, &rect, "Space: pause", -20);
 	put_text(game, &rect, "Arrow [<-]: previous move", -20);
 	put_text(game, &rect, "Arrow [->]: next move", -20);
 	put_text(game, &rect, "Num [-]: slow down", -20);
 	put_text(game, &rect, "Num [+]: speed up", -20);
+	put_text(game, &rect, "Enter: print board to console", -20);
 	put_text(game, &rect, "Backspace: change colors", -20);
 	put_text(game, &rect, "Escape: quit", -20);
 }
 
-void		visualize(t_filler_vis *game, int controls)
+void		visualize(t_filler_vis *game, const int controls)
 {
 	if (SDL_SetRenderDrawColor(game->renderer, 0, 0, 0, 0)
 		|| SDL_RenderClear(game->renderer))

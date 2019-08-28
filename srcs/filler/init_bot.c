@@ -6,11 +6,11 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/12 19:02:48 by smorty            #+#    #+#             */
-/*   Updated: 2019/08/27 17:53:35 by smorty           ###   ########.fr       */
+/*   Updated: 2019/08/28 20:18:05 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "filler.h"
+#include "filler_player.h"
 
 static void	init_player(t_filler *bot, char *player_line)
 {

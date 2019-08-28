@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: smorty <smorty@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/08/12 16:55:12 by smorty            #+#    #+#              #
-#    Updated: 2019/08/26 23:19:06 by smorty           ###   ########.fr        #
+#    Created: 2019/08/28 16:35:09 by smorty            #+#    #+#              #
+#    Updated: 2019/08/28 22:39:02 by smorty           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,72 +14,86 @@ NAME := smorty.filler
 
 VISUAL := filler_visual
 
-SRCSFILES := $(addprefix filler/, main.c init_bot.c heat_map.c solver.c find_move.c) read_input.c shared.c
+SRCSFILES := main_player.c init_bot.c heat_map.c solver.c find_move.c
 
-SRCSFILES_VIS := $(addprefix visualizer/,\
-	main.c init_visualizer.c read_board.c visualization_loop.c visualize.c render_board.c utility.c) read_input.c shared.c
+SRCSFILES_VIS := main_visual.c init_visualizer.c read_board.c visualization_loop.c visualize.c render_board.c utility.c 
 
-SRCDIR := srcs/
+SRCS_SHARED := read_input.c error.c
 
-LIBSDIR := libs/
+SRCS_DIR := srcs srcs/filler srcs/visualizer
 
-OBJDIR := $(SRCDIR)obj/
+OBJS := $(SRCSFILES:.c=.o)
 
-LFTDIR := $(SRCDIR)$(LIBSDIR)libft/
+OBJS_VIS := $(SRCSFILES_VIS:.c=.o)
 
-LFT := $(LFTDIR)libft.a
+OBJS_SHARED := $(SRCS_SHARED:.c=.o)
 
-LFTPRINTFDIR := $(SRCDIR)$(LIBSDIR)ft_printf/
+OBJ_DIR := srcs/obj
 
-LFTPRINTF := $(LFTPRINTFDIR)libftprintf.a
+LFT := libft.a
 
-SDL2DIR := $(SRCDIR)$(LIBSDIR)sdl2/
+LFTPRINTF := libftprintf.a
 
-SDL2TTFDIR := $(SRCDIR)$(LIBSDIR)sdl2_ttf/
+LFT_DIR := srcs/libs/libft
 
-SDL2 := $(SDL2DIR)lib/libSDL2-2.0.0.dylib
+LFTPRINTF_DIR := srcs/libs/ft_printf
 
-SDL2TTF := $(SDL2TTFDIR)lib/libSDL2_ttf-2.0.0.dylib
+HEADERS := filler_shared.h filler_player.h filler_visualizer.h libft.h ft_printf.h SDL.h SDL_ttf.h
 
-INCLUDE := -I./include -I./$(SDL2DIR)/include/SDL2 -I./$(SDL2TTFDIR)/include/SDL2 -I./$(LFTDIR) -I./$(LFTPRINTFDIR)includes/
+HEADERS_DIR := include $(LFT_DIR) $(LFTPRINTF_DIR)/includes
 
-SRCS := $(addprefix $(SRCDIR), $(SRCSFILES))
+HEADERS_SDL_DIR := srcs/libs/sdl2/include/SDL2 srcs/libs/sdl2_ttf/include/SDL2
 
-SRCS_VIS := $(addprefix $(SRCDIR), $(SRCSFILES_VIS))
-
-OBJ := $(SRCS:%.c=$(OBJDIR)%.o)
-
-OBJ_VIS := $(SRCS_VIS:%.c=$(OBJDIR)%.o)
+SDL_LIBS := srcs/libs/sdl2/lib/libSDL2-2.0.0.dylib srcs/libs/sdl2_ttf/lib/libSDL2_ttf-2.0.0.dylib
 
 CC := gcc -Wall -Werror -Wextra
 
+vpath %.c $(SRCS_DIR)
+vpath %.o $(OBJ_DIR) $(OBJ_DIR)/$(NAME) $(OBJ_DIR)/$(VISUAL)
+vpath %.h $(HEADERS_DIR) $(HEADERS_SDL_DIR)
+vpath %.a $(LFT_DIR) $(LFTPRINTF_DIR)
+
 all: $(NAME) $(VISUAL)
 
-$(NAME): $(LFT) $(LFTPRINTF) $(OBJ)
-	@$(CC) $^ -o $@
+$(NAME): $(LFT) $(LFTPRINTF) $(OBJS) $(OBJS_SHARED)
+	@$(CC) -lft -L $(LFT_DIR) -lftprintf -L $(LFTPRINTF_DIR) $(addprefix $(OBJ_DIR)/, $(addprefix $(NAME)/, $(OBJS)) $(OBJS_SHARED)) $(INCLUDE) -o $@
 	@printf "\r\e[J\e[32m$@\e[0m done!\n\e[?25h"
 
-$(VISUAL): $(LFT) $(LFTPRINTF) $(OBJ_VIS)
-	@$(CC) $^ $(SDL2) $(SDL2TTF) -o $@
+$(VISUAL): $(LFT) $(LFTPRINTF) $(OBJS_VIS) $(OBJS_SHARED)
+	@$(CC) -lft -L $(LFT_DIR) -lftprintf -L $(LFTPRINTF_DIR) $(SDL_LIBS) $(addprefix $(OBJ_DIR)/, $(addprefix $(VISUAL)/, $(OBJS_VIS)) $(OBJS_SHARED)) $(INCLUDE) -o $@
 	@printf "\r\e[J\e[32m$@\e[0m done!\n\e[?25h"
+
+$(OBJS): %.o: %.c $(HEADERS)
+	@mkdir -p $(OBJ_DIR)/$(NAME)
+	@$(CC) -c $< $(addprefix -I,$(HEADERS_DIR)) -o $(OBJ_DIR)/$(NAME)/$@
+	@printf "\r\e[?25l\e[Jcompiling \e[32m$(notdir $<)\e[0m"
+
+$(OBJS_VIS): %.o: %.c $(HEADERS)
+	@mkdir -p $(OBJ_DIR)/$(VISUAL)
+	@$(CC) -c $< $(addprefix -I,$(HEADERS_DIR) $(HEADERS_SDL_DIR)) -o $(OBJ_DIR)/$(VISUAL)/$@
+	@printf "\r\e[?25l\e[Jcompiling \e[32m$(notdir $<)\e[0m"
+
+$(OBJS_SHARED): %.o: %.c $(HEADERS)
+	@mkdir -p $(OBJ_DIR)
+	@$(CC) -c $< $(addprefix -I,$(HEADERS_DIR)) -o $(OBJ_DIR)/$@
+	@printf "\r\e[?25l\e[Jcompiling \e[32m$(notdir $<)\e[0m"
 
 $(LFT):
-	@$(MAKE) -C $(LFTDIR)
-	@$(MAKE) -C $(LFTDIR) clean
+	@$(MAKE) -C $(LFT_DIR)
+	@$(MAKE) -C $(LFT_DIR) clean
 
 $(LFTPRINTF):
-	@$(MAKE) -C $(LFTPRINTFDIR)
-	@$(MAKE) -C $(LFTPRINTFDIR) clean
+	@$(MAKE) -C $(LFTPRINTF_DIR)
+	@$(MAKE) -C $(LFTPRINTF_DIR) clean
 
-$(OBJDIR)%.o: %.c
-	@mkdir -p '$(@D)'
-	@$(CC) $(INCLUDE) -c $< -o $@
-	@printf "\r\e[?25l\e[Jcompiling \e[32m$(notdir $^)\e[0m"
+echo:
+	@echo $(OBJS)
+	@echo $(OBJS_VIS)
 
 clean:
-	@rm -rf $(OBJDIR)
-	@$(MAKE) -C $(LFTDIR) fclean
-	@$(MAKE) -C $(LFTPRINTFDIR) fclean
+	@rm -rf $(OBJ_DIR)
+	@$(MAKE) -C $(LFT_DIR) fclean
+	@$(MAKE) -C $(LFTPRINTF_DIR) fclean
 
 fclean: clean
 	@rm -f $(NAME)

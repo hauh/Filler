@@ -6,29 +6,29 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 17:38:31 by smorty            #+#    #+#             */
-/*   Updated: 2019/08/26 23:11:27 by smorty           ###   ########.fr       */
+/*   Updated: 2019/08/28 22:33:14 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler_visualizer.h"
 
-static void		put_rectangle(t_filler_vis *game, SDL_Rect *rect, char type)
+static void		put_rectangle(t_filler_vis *game, SDL_Rect *rect, const char ox)
 {
 	SDL_Color color;
 
-	if (type == 'O')
+	if (ox == 'O')
 	{
 		color.r = game->p1_color->r;
 		color.g = game->p1_color->g;
 		color.b = game->p1_color->b;
 	}
-	else if (type == 'X')
+	else if (ox == 'X')
 	{
 		color.r = game->p2_color->r;
 		color.g = game->p2_color->g;
 		color.b = game->p2_color->b;
 	}
-	else if (type == 'x' || type == 'o')
+	else if (ox == 'x' || ox == 'o')
 		ft_memset(&color, 200, sizeof(SDL_Color));
 	else
 		return ;
@@ -39,7 +39,7 @@ static void		put_rectangle(t_filler_vis *game, SDL_Rect *rect, char type)
 }
 
 static void		render_line(t_filler_vis *game, SDL_Rect *rect,
-							char *line, float delta_w)
+							char *line, const float delta_w)
 {
 	float round_w;
 

@@ -6,11 +6,11 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 23:05:05 by smorty            #+#    #+#             */
-/*   Updated: 2019/08/25 16:00:40 by smorty           ###   ########.fr       */
+/*   Updated: 2019/08/28 20:22:07 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "filler.h"
+#include "filler_shared.h"
 
 static char	*output_line(char *tail, char *p)
 {

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_visual.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/20 21:42:24 by smorty            #+#    #+#             */
-/*   Updated: 2019/08/26 20:50:30 by smorty           ###   ########.fr       */
+/*   Updated: 2019/08/28 23:27:58 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,13 @@ static void		cleanup(t_filler_vis *game)
 {
 	char *buf;
 
-	while ((buf = read_input()))
+	if ((buf = read_input()))
+	{
 		free(buf);
+		ft_putendl("Please wait for filler_vm to finish.");
+		while ((buf = read_input()))
+			free(buf);
+	}
 	if (game->board_states)
 		clean_boards(game->board_states);
 	TTF_CloseFont(game->font);

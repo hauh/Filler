@@ -6,13 +6,13 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 23:17:25 by smorty            #+#    #+#             */
-/*   Updated: 2019/08/26 23:17:51 by smorty           ###   ########.fr       */
+/*   Updated: 2019/08/28 22:29:27 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler_visualizer.h"
 
-static void	set_color(t_filler_vis *game, SDL_Color *color, char *text)
+static void	set_color(t_filler_vis *game, SDL_Color *color, const char *text)
 {
 	if (ft_strequ(text, "P1 "))
 	{
@@ -31,7 +31,8 @@ static void	set_color(t_filler_vis *game, SDL_Color *color, char *text)
 	color->a = 0;
 }
 
-void		put_text(t_filler_vis *game, SDL_Rect *rect, char *text, int scale)
+void		put_text(t_filler_vis *game, SDL_Rect *rect,
+						const char *text, const int scale)
 {
 	SDL_Surface	*surface;
 	SDL_Texture	*texture;
@@ -53,7 +54,7 @@ void		put_text(t_filler_vis *game, SDL_Rect *rect, char *text, int scale)
 		rect->y += rect->h;
 }
 
-void		create_frame(t_filler_vis *game, int width, int height)
+void		create_frame(t_filler_vis *game, const int width, const int height)
 {
 	SDL_Rect	rect;
 	SDL_Color	color;

@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/25 16:10:15 by smorty            #+#    #+#             */
-/*   Updated: 2019/08/27 16:51:24 by smorty           ###   ########.fr       */
+/*   Updated: 2019/08/28 22:34:47 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,22 +37,22 @@ static void		get_score(t_board *new, int y)
 	new->xs = xs;
 }
 
-static char		**get_board(char *first_line, int y)
+static char		**get_board(char *first_line, const int height)
 {
 	char	**board;
 	int		i;
 
-	if (!(board = (char **)malloc(sizeof(char *) * (y + 2))))
+	if (!(board = (char **)malloc(sizeof(char *) * (height + 2))))
 		error(strerror(errno));
 	i = 0;
 	board[i++] = first_line;
-	while (i <= y)
+	while (i <= height)
 		board[i++] = read_input();
 	board[i] = NULL;
 	return (board);
 }
 
-static t_board	*new_board(t_board *prev, int y)
+static t_board	*new_board(t_board *prev, const int height)
 {
 	t_board	*new;
 	char	*buf;
@@ -71,17 +71,17 @@ static t_board	*new_board(t_board *prev, int y)
 	}
 	if (!(new = (t_board *)malloc(sizeof(t_board))))
 		error(strerror(errno));
-	new->board = get_board(buf, y);
+	new->board = get_board(buf, height);
 	new->right = NULL;
 	new->left = prev;
 	if (prev)
 		prev->right = new;
 	new->last = 0;
-	get_score(new, y);
+	get_score(new, height);
 	return (new);
 }
 
-void			get_next_board(t_filler_vis *game, int height)
+void			get_next_board(t_filler_vis *game, const int height)
 {
 	t_board	*p;
 	char	*buf;
