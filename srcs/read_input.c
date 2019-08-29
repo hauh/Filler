@@ -6,33 +6,36 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 23:05:05 by smorty            #+#    #+#             */
-/*   Updated: 2019/08/28 20:22:07 by smorty           ###   ########.fr       */
+/*   Updated: 2019/08/29 22:49:38 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler_shared.h"
 
-static char	*output_line(char *tail, char *p)
+static char	*get_new_line(char **tail, char *newline)
 {
+	char *line0;
 	char *line;
-	char *tail0;
+	char *p;
+	char *new_tail;
 
-	if (!(line = (char *)malloc(sizeof(char) * (p - tail + 1))))
+	if (!(line0 = (char *)malloc(sizeof(char) * (newline - *tail + 1))))
 		error(strerror(errno));
-	p = line;
-	tail0 = tail;
-	while (*tail && *tail != '\n')
-		*p++ = *tail++;
-	*p = 0;
-	if (*tail)
-		++tail;
-	while (*tail)
-		*tail0++ = *tail++;
-	*tail0 = 0;
-	return (line);
+	line = line0;
+	p = *tail;
+	while (p != newline)
+		*line++ = *p++;
+	*line = 0;
+	if (!*++p)
+		new_tail = NULL;
+	else if (!(new_tail = ft_strdup(p)))
+		error(strerror(errno));
+	free(*tail);
+	*tail = new_tail;
+	return (line0);
 }
 
-static char	*gnl(char **tail)
+static char	*read_more(char *tail)
 {
 	char	buf[BUFF_SIZE + 1];
 	char	*p;
@@ -40,36 +43,43 @@ static char	*gnl(char **tail)
 
 	if ((r = read(0, buf, BUFF_SIZE)) < 0)
 		error(strerror(errno));
-	if (!r && !**tail)
-		return (NULL);
 	buf[r] = 0;
-	p = *tail;
-	if (!(*tail = ft_strjoin(*tail, buf)))
-		error(strerror(errno));
-	free(p);
-	p = *tail;
-	while (*p && *p != '\n')
-		++p;
-	if (!*p && r)
-		return (gnl(tail));
-	return (output_line(*tail, p));
+	if (tail)
+	{
+		p = tail;
+		if (!(tail = ft_strjoin(tail, r ? buf : "\n")))
+			error(strerror(errno));
+		free(p);
+	}
+	else
+	{
+		if (!r)
+			return (NULL);
+		if (!(tail = ft_strdup(buf)))
+			error(strerror(errno));
+	}
+	return (tail);
+}
+
+static char	*find_newline(char *s)
+{
+	if (s)
+		while (*s)
+			if (*s++ == '\n')
+				return (s - 1);
+	return (NULL);
 }
 
 char		*read_input(void)
 {
 	static char	*tail = NULL;
-	char		*new;
+	char		*newline;
 
-	if (!tail)
+	while (1)
 	{
-		if (!(tail = (char *)malloc(sizeof(char))))
-			error(strerror(errno));
-		*tail = 0;
+		if ((newline = find_newline(tail)))
+			return (get_new_line(&tail, newline));
+		else if (!(tail = read_more(tail)))
+			return (NULL);
 	}
-	if (!(new = gnl(&tail)))
-	{
-		free(tail);
-		return ((tail = NULL));
-	}
-	return (new);
 }

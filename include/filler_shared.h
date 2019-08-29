@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/28 20:18:11 by smorty            #+#    #+#             */
-/*   Updated: 2019/08/28 23:38:40 by smorty           ###   ########.fr       */
+/*   Updated: 2019/08/29 22:34:27 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <errno.h>
 # include "libft.h"
 
-# define BUFF_SIZE 2
+# define BUFF_SIZE 3
 
 void	error(const char *error_msg);
 char	*read_input(void);

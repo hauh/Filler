@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/22 21:56:50 by smorty            #+#    #+#             */
-/*   Updated: 2019/08/28 23:40:42 by smorty           ###   ########.fr       */
+/*   Updated: 2019/08/29 22:46:51 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,6 @@ void			render_board(t_filler_vis *game);
 void			create_frame(t_filler_vis *game, int width, int height);
 void			put_text(t_filler_vis *game, SDL_Rect *rect,
 							const char *text, int scale);
+
 
 #endif
