@@ -6,7 +6,7 @@
 #    By: smorty <smorty@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/28 16:35:09 by smorty            #+#    #+#              #
-#    Updated: 2019/08/28 22:39:02 by smorty           ###   ########.fr        #
+#    Updated: 2019/08/30 17:19:28 by smorty           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,7 +59,7 @@ $(NAME): $(LFT) $(LFTPRINTF) $(OBJS) $(OBJS_SHARED)
 	@$(CC) -lft -L $(LFT_DIR) -lftprintf -L $(LFTPRINTF_DIR) $(addprefix $(OBJ_DIR)/, $(addprefix $(NAME)/, $(OBJS)) $(OBJS_SHARED)) $(INCLUDE) -o $@
 	@printf "\r\e[J\e[32m$@\e[0m done!\n\e[?25h"
 
-$(VISUAL): $(LFT) $(LFTPRINTF) $(OBJS_VIS) $(OBJS_SHARED)
+$(VISUAL): $(LFT) $(OBJS_VIS) $(OBJS_SHARED)
 	@$(CC) -lft -L $(LFT_DIR) -lftprintf -L $(LFTPRINTF_DIR) $(SDL_LIBS) $(addprefix $(OBJ_DIR)/, $(addprefix $(VISUAL)/, $(OBJS_VIS)) $(OBJS_SHARED)) $(INCLUDE) -o $@
 	@printf "\r\e[J\e[32m$@\e[0m done!\n\e[?25h"
 
@@ -86,10 +86,6 @@ $(LFTPRINTF):
 	@$(MAKE) -C $(LFTPRINTF_DIR)
 	@$(MAKE) -C $(LFTPRINTF_DIR) clean
 
-echo:
-	@echo $(OBJS)
-	@echo $(OBJS_VIS)
-
 clean:
 	@rm -rf $(OBJ_DIR)
 	@$(MAKE) -C $(LFT_DIR) fclean
@@ -97,5 +93,6 @@ clean:
 
 fclean: clean
 	@rm -f $(NAME)
+	@rm -f $(VISUAL)
 
 re: fclean all
