@@ -6,7 +6,7 @@
 #    By: smorty <smorty@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/28 16:35:09 by smorty            #+#    #+#              #
-#    Updated: 2019/08/30 17:19:28 by smorty           ###   ########.fr        #
+#    Updated: 2019/09/02 17:46:53 by smorty           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,7 @@ HEADERS_DIR := include $(LFT_DIR) $(LFTPRINTF_DIR)/includes
 
 HEADERS_SDL_DIR := srcs/libs/sdl2/include/SDL2 srcs/libs/sdl2_ttf/include/SDL2
 
-SDL_LIBS := srcs/libs/sdl2/lib/libSDL2-2.0.0.dylib srcs/libs/sdl2_ttf/lib/libSDL2_ttf-2.0.0.dylib
+SDL_LIBS_LINK := $$(sdl2-config --cflags --libs) -lSDL2main -L./srcs/libs/sdl2/lib/ -lSDL2_ttf -L./srcs/libs/sdl2_ttf/lib/
 
 CC := gcc -Wall -Werror -Wextra
 
@@ -56,11 +56,11 @@ vpath %.a $(LFT_DIR) $(LFTPRINTF_DIR)
 all: $(NAME) $(VISUAL)
 
 $(NAME): $(LFT) $(LFTPRINTF) $(OBJS) $(OBJS_SHARED)
-	@$(CC) -lft -L $(LFT_DIR) -lftprintf -L $(LFTPRINTF_DIR) $(addprefix $(OBJ_DIR)/, $(addprefix $(NAME)/, $(OBJS)) $(OBJS_SHARED)) $(INCLUDE) -o $@
+	@$(CC) $(addprefix $(OBJ_DIR)/, $(addprefix $(NAME)/, $(OBJS)) $(OBJS_SHARED)) -lft -L $(LFT_DIR) -lftprintf -L $(LFTPRINTF_DIR) $(INCLUDE) -o $@
 	@printf "\r\e[J\e[32m$@\e[0m done!\n\e[?25h"
 
 $(VISUAL): $(LFT) $(OBJS_VIS) $(OBJS_SHARED)
-	@$(CC) -lft -L $(LFT_DIR) -lftprintf -L $(LFTPRINTF_DIR) $(SDL_LIBS) $(addprefix $(OBJ_DIR)/, $(addprefix $(VISUAL)/, $(OBJS_VIS)) $(OBJS_SHARED)) $(INCLUDE) -o $@
+	@$(CC) $(addprefix $(OBJ_DIR)/, $(addprefix $(VISUAL)/, $(OBJS_VIS)) $(OBJS_SHARED)) -lft -L $(LFT_DIR) -lftprintf -L $(LFTPRINTF_DIR) $(SDL_LIBS_LINK) $(INCLUDE) -o $@
 	@printf "\r\e[J\e[32m$@\e[0m done!\n\e[?25h"
 
 $(OBJS): %.o: %.c $(HEADERS)
