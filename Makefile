@@ -6,7 +6,7 @@
 #    By: smorty <smorty@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/28 16:35:09 by smorty            #+#    #+#              #
-#    Updated: 2019/09/02 17:46:53 by smorty           ###   ########.fr        #
+#    Updated: 2019/09/02 20:50:05 by smorty           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,7 @@ HEADERS_DIR := include $(LFT_DIR) $(LFTPRINTF_DIR)/includes
 
 HEADERS_SDL_DIR := srcs/libs/sdl2/include/SDL2 srcs/libs/sdl2_ttf/include/SDL2
 
-SDL_LIBS_LINK := $$(sdl2-config --cflags --libs) -lSDL2main -L./srcs/libs/sdl2/lib/ -lSDL2_ttf -L./srcs/libs/sdl2_ttf/lib/
+SDL_LIBS := -L ~/.brew/lib -lSDL2 -lSDL2_ttf
 
 CC := gcc -Wall -Werror -Wextra
 
@@ -60,7 +60,7 @@ $(NAME): $(LFT) $(LFTPRINTF) $(OBJS) $(OBJS_SHARED)
 	@printf "\r\e[J\e[32m$@\e[0m done!\n\e[?25h"
 
 $(VISUAL): $(LFT) $(OBJS_VIS) $(OBJS_SHARED)
-	@$(CC) $(addprefix $(OBJ_DIR)/, $(addprefix $(VISUAL)/, $(OBJS_VIS)) $(OBJS_SHARED)) -lft -L $(LFT_DIR) -lftprintf -L $(LFTPRINTF_DIR) $(SDL_LIBS_LINK) $(INCLUDE) -o $@
+	@$(CC) $(addprefix $(OBJ_DIR)/, $(addprefix $(VISUAL)/, $(OBJS_VIS)) $(OBJS_SHARED)) -lft -L $(LFT_DIR) -lftprintf -L $(LFTPRINTF_DIR) $(SDL_LIBS) $(INCLUDE) -o $@
 	@printf "\r\e[J\e[32m$@\e[0m done!\n\e[?25h"
 
 $(OBJS): %.o: %.c $(HEADERS)
