@@ -6,7 +6,7 @@
 #    By: smorty <smorty@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/28 16:35:09 by smorty            #+#    #+#              #
-#    Updated: 2019/09/02 20:50:05 by smorty           ###   ########.fr        #
+#    Updated: 2019/09/08 19:32:19 by smorty           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,13 +22,15 @@ SRCS_SHARED := read_input.c error.c
 
 SRCS_DIR := srcs srcs/filler srcs/visualizer
 
+LIBS_DIR := srcs/libs
+
 OBJS := $(SRCSFILES:.c=.o)
 
 OBJS_VIS := $(SRCSFILES_VIS:.c=.o)
 
 OBJS_SHARED := $(SRCS_SHARED:.c=.o)
 
-OBJ_DIR := srcs/obj
+OBJ_DIR := obj
 
 LFT := libft.a
 
@@ -42,9 +44,11 @@ HEADERS := filler_shared.h filler_player.h filler_visualizer.h libft.h ft_printf
 
 HEADERS_DIR := include $(LFT_DIR) $(LFTPRINTF_DIR)/includes
 
-HEADERS_SDL_DIR := srcs/libs/sdl2/include/SDL2 srcs/libs/sdl2_ttf/include/SDL2
+HEADERS_SDL_DIR := $(LIBS_DIR)/sdl2/include/SDL2 $(LIBS_DIR)/sdl2_ttf/include/SDL2
 
-SDL_LIBS := -L ~/.brew/lib -lSDL2 -lSDL2_ttf
+HEADERS_SDL_DIR := $(LIBS_DIR)/SDL2.framework/Headers $(LIBS_DIR)/SDL2_ttf.framework/Headers
+
+SDL_LIBS := -Wl,-rpath,$(LIBS_DIR) -F $(LIBS_DIR) -framework SDL2 -framework SDL2_ttf
 
 CC := gcc -Wall -Werror -Wextra
 
