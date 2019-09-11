@@ -6,7 +6,7 @@
 #    By: smorty <smorty@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/28 16:35:09 by smorty            #+#    #+#              #
-#    Updated: 2019/09/11 19:18:56 by smorty           ###   ########.fr        #
+#    Updated: 2019/09/11 19:24:31 by smorty           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,9 +20,9 @@ SRCSFILES_VIS := main_visual.c init_visualizer.c read_board.c visualization_loop
 
 SRCS_SHARED := read_input.c error.c
 
-SRCS_DIR := srcs srcs/filler srcs/visualizer
+SRCS_DIR := src src/filler src/visualizer
 
-LIBS_DIR := srcs/libs
+LIBS_DIR := src/libs
 
 OBJS := $(SRCSFILES:.c=.o)
 
@@ -36,9 +36,9 @@ LFT := libft.a
 
 LFTPRINTF := libftprintf.a
 
-LFT_DIR := srcs/libs/libft
+LFT_DIR := src/libs/libft
 
-LFTPRINTF_DIR := srcs/libs/ft_printf
+LFTPRINTF_DIR := src/libs/ft_printf
 
 HEADERS := filler_shared.h filler_player.h filler_visualizer.h libft.h ft_printf.h SDL.h SDL_ttf.h
 
@@ -58,11 +58,11 @@ vpath %.a $(LFT_DIR) $(LFTPRINTF_DIR)
 all: $(NAME) $(VISUAL)
 
 $(NAME): $(LFT) $(LFTPRINTF) $(OBJS) $(OBJS_SHARED)
-	@$(CC) $(addprefix $(OBJ_DIR)/, $(addprefix $(NAME)/, $(OBJS)) $(OBJS_SHARED)) -lft -L $(LFT_DIR) -lftprintf -L $(LFTPRINTF_DIR) $(INCLUDE) -o $@
+	@$(CC) $(addprefix $(OBJ_DIR)/, $(addprefix $(NAME)/, $(OBJS)) $(OBJS_SHARED)) -lft -L $(LFT_DIR) -lftprintf -L $(LFTPRINTF_DIR) -o $@
 	@printf "\r\e[J\e[32m$@\e[0m done!\n\e[?25h"
 
 $(VISUAL): $(LFT) $(OBJS_VIS) $(OBJS_SHARED)
-	@$(CC) $(addprefix $(OBJ_DIR)/, $(addprefix $(VISUAL)/, $(OBJS_VIS)) $(OBJS_SHARED)) -lft -L $(LFT_DIR) -lftprintf -L $(LFTPRINTF_DIR) $(SDL_LIBS) $(INCLUDE) -o $@
+	@$(CC) $(addprefix $(OBJ_DIR)/, $(addprefix $(VISUAL)/, $(OBJS_VIS)) $(OBJS_SHARED)) -lft -L $(LFT_DIR) -lftprintf -L $(LFTPRINTF_DIR) $(SDL_LIBS) -o $@
 	@printf "\r\e[J\e[32m$@\e[0m done!\n\e[?25h"
 
 $(OBJS): %.o: %.c $(HEADERS)
