@@ -6,7 +6,7 @@
 #    By: smorty <smorty@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/28 16:35:09 by smorty            #+#    #+#              #
-#    Updated: 2019/09/08 19:32:19 by smorty           ###   ########.fr        #
+#    Updated: 2019/09/11 19:18:56 by smorty           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,8 +43,6 @@ LFTPRINTF_DIR := srcs/libs/ft_printf
 HEADERS := filler_shared.h filler_player.h filler_visualizer.h libft.h ft_printf.h SDL.h SDL_ttf.h
 
 HEADERS_DIR := include $(LFT_DIR) $(LFTPRINTF_DIR)/includes
-
-HEADERS_SDL_DIR := $(LIBS_DIR)/sdl2/include/SDL2 $(LIBS_DIR)/sdl2_ttf/include/SDL2
 
 HEADERS_SDL_DIR := $(LIBS_DIR)/SDL2.framework/Headers $(LIBS_DIR)/SDL2_ttf.framework/Headers
 
