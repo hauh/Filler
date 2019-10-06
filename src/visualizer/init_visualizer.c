@@ -6,7 +6,7 @@
 /*   By: smorty <smorty@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/22 22:56:54 by smorty            #+#    #+#             */
-/*   Updated: 2019/08/30 16:58:19 by smorty           ###   ########.fr       */
+/*   Updated: 2019/10/06 22:42:37 by smorty           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static void			get_game_info(t_filler_vis *game)
 	game->width = ft_atoi(++p);
 	free(buf);
 	game->board_states = NULL;
-	if (!(game->font = TTF_OpenFont("/srcs/OpenSans-Semibold.ttf", 72)))
+	if (!(game->font = TTF_OpenFont("/src/OpenSans-Semibold.ttf", 72)))
 		error(TTF_GetError());
 }
 
